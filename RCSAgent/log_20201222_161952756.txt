@@ -1,0 +1,2 @@
+16:19:52.756 T14776 Startup C:\Users\handy89\OneDrive - Tartu Ülikool\Github\deltax\RCSAgent\RCSAgent.exe: 2020.12.22 16:19:52.756
+16:19:53.402 T14776 TfrmRcsAgent3: Started v3.0.12.0
