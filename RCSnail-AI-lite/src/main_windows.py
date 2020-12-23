@@ -114,7 +114,7 @@ async def main_dagger(context: Context):
                     #for throttle you can use 0 to just test if car turns wheels in good direction at different locations
                     
                     #the minimal throttle to make the car move slowly is around 0.65, depends on battery charge level
-                    next_controls["t"] = np.float64(0) # max(0,min(1, np.float64(controls[1])))}
+                    next_controls["t"] = np.float64(0.6) # max(0,min(1, np.float64(controls[1])))}
                     
                     #DELTAX: to use model's output for throttle, not fixed value
                     #next_controls['t'] = max(0,min(1, np.float64(controls[1])))}
@@ -128,6 +128,7 @@ async def main_dagger(context: Context):
                     raise ValueError('Misconfigured control mode!')
 
                 controls_queue.send_json(next_controls)
+                input('Let us wait for user input. Let me know how many seconds to sleep now.\n')
 
             except Exception as ex:
                 print("Predicting exception: {}".format(ex))

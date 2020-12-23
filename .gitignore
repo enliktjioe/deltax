@@ -1,8 +1,6 @@
-RCSAgent/rec/20201223-152404055.h264
-RCSAgent/rec/20201223-152404055.json
-RCSAgent/rec/20201223-152630749.h264
-RCSAgent/rec/20201223-152630749.json
-
 RCSAgent/rec/
+RCSAgent/log*.txt
 
-RCSAgent/log_20201223_173534211.txt
+RCSnail-AI-lite/src/example_input_in_try_loop.png
+
+RCSnail-AI-lite/src/raw_input_in_try_loop.png
