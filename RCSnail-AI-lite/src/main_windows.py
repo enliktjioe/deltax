@@ -128,7 +128,7 @@ async def main_dagger(context: Context):
                     raise ValueError('Misconfigured control mode!')
 
                 controls_queue.send_json(next_controls)
-                input('Let us wait for user input. Let me know how many seconds to sleep now.\n')
+                #input('Let us wait for user input. Let me know how many seconds to sleep now.\n')
 
             except Exception as ex:
                 print("Predicting exception: {}".format(ex))
