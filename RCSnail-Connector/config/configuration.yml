@@ -1,0 +1,16 @@
+# RCSnail properties
+window_width: 965
+window_height: 485
+frame_width: 180
+frame_height: 120
+FPS: 30
+# track: eeden
+# car: eeden_i8_04
+track: deltax
+car: deltax_i8_01
+# ZMQ properties
+data_queue_port: 5551
+controls_queue_port: 5552
+# Procedural flags
+model_override_enabled: true
+expert_supervision_enabled: true
