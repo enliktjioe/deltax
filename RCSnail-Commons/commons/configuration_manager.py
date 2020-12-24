@@ -4,7 +4,9 @@ from commons.configuration import Configuration
 
 class ConfigurationManager:
 
-    def __init__(self, config_path='../config/configuration.yml'):
+    # def __init__(self, config_path='../config/configuration.yml'):
+    # def __init__(self, config_path='/home/enlik/GitRepo/deltax/RCSnail-Connector/config/configuration.yml'):
+    def __init__(self, config_path='/home/enlik/GitRepo/deltax/RCSnail-AI-lite/config/configuration.yml'):
         self.config = Configuration(self.__build_conf_map(config_path))
 
     def __build_conf_map(self, config_path):

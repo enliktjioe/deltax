@@ -44,6 +44,7 @@ def main(context: Context):
     pygame.display.set_caption("RCSnail Connector")
 
     screen = pygame.display.set_mode((config.window_width, config.window_height))
+    # screen = pygame.display.set_mode((965, 485))
     interceptor = Interceptor(config, data_queue, controls_queue)
     car = JoystickCar(config, send_car_state=interceptor.send_car_state, recv_car_controls=interceptor.recv_car_controls)
     renderer = JoystickRenderer(config, screen, car)
