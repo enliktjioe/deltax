@@ -14,7 +14,8 @@ import PIL
 #foldernames = glob.glob("2020*")
 #output_foldername="cleaned"
 foldernames = glob.glob("*2020*")
-output_foldername="cleaned_all_masked"
+# output_foldername="cleaned_all_masked"
+output_foldername="C://Users/enlik/GitRepo/deltax/RCSnail-AI-lite/n1_m1"
 
 data_counter = 0 #keeps track how many we have in folder already
 random.shuffle(foldernames) #shuffling to get both directions mixed order, so if we take the tail as val set we get both
@@ -90,6 +91,8 @@ for rec_name in foldernames:
             io.imsave("example"+str(data_counter+i)+".png",cropped)
         
 
-        np.save(output_foldername+"/frame_"+str(data_counter+i).zfill(7)+".npy", cropped)
-        np.save(output_foldername+"/commands_"+str(data_counter+i).zfill(7)+".npy", np.array(measurements_to_be_kept[i,:]))
+        # np.save(output_foldername+"/frame_"+str(data_counter+i).zfill(7)+".npy", cropped)
+        # np.save(output_foldername+"/commands_"+str(data_counter+i).zfill(7)+".npy", np.array(measurements_to_be_kept[i,:]))
+        np.save(output_foldername+"/frame_n1_m1_"+str(data_counter+i).zfill(7)+".npy", cropped)
+        np.save(output_foldername+"/commands_n1_m1_"+str(data_counter+i).zfill(7)+".npy", np.array(measurements_to_be_kept[i,:]))
     data_counter+=len(images_to_be_kept) #done with this folder, add the nr to counter
