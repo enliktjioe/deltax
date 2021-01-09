@@ -38,7 +38,11 @@ for rec_name in foldernames:
             if data_type not in ['F','D']:
                 print("BIG NO NO, wrong data type",data_type)
                 break
-                
+            
+            if data_type=="D":
+                if (line['j']['t'] == 0):
+                    continue
+
             if previous_type == data_type:
                 #print(i, ": two of same type in a row", data_type)
                 if data_type=="F": #we want to keep the earliest frame
@@ -66,25 +70,44 @@ for rec_name in foldernames:
     images_to_be_kept = images_to_be_kept[:crop_len] #these are file nrs
     measurements_to_be_kept=measurements_to_be_kept[:crop_len,:]
 
+    # for i, meas in enumerate(measurements_to_be_kept):
+    #     print(i, " - " , np.array(measurements_to_be_kept[i,:]))
 
+    #     if i == 60:
+    #         break;
 
+    # for i,img_nr in enumerate(images_to_be_kept):
+    #     filename = rec_name+'/images/frame'+str(img_nr)+'.jpg'
+    #     im = Image.open(filename)
+    #     small = im.resize(size=[180,120], resample= Image.NEAREST)
+    #     print(type(small))
+    #     cropped = np.array(small)
+    #     print(cropped.shape)
+    #     cropped = cropped[-60:,:,:]
+    #     print(cropped.shape)
 
+    #     #print(cropped)
+    #     break;
 
     for i,img_nr in enumerate(images_to_be_kept):
-        filename = rec_name+'/images/frame-'+str(img_nr)+'.png'
+        filename = rec_name+'/images/frame'+str(img_nr)+'.jpg'
         #image = io.imread(fname=filename)
         #should apply transformations here
         #print(type(image[0,0,0]),image[0,:10,:], image.shape)
         im = Image.open(filename)
         small = im.resize(size=[180,120], resample= Image.NEAREST)
-        print(type(small))
+        #print(type(small))
         cropped = np.array(small)
-        print(cropped.shape)
+        #print(cropped.shape)
         cropped = cropped[-60:,:,:]
         if i%100==0:
-            io.imsave("example"+str(data_counter+i)+".png",cropped)
+            io.imsave("example"+str(data_counter+i)+".jpg",cropped)
         
+        print(i)
+        #print(cropped)
+
 
         np.save(output_foldername+"/frame_"+str(data_counter+i).zfill(7)+".npy", cropped)
         np.save(output_foldername+"/commands_"+str(data_counter+i).zfill(7)+".npy", np.array(measurements_to_be_kept[i,:]))
+
     data_counter+=len(images_to_be_kept) #done with this folder, add the nr to counter
