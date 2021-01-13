@@ -1,18 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# from IPython.display import display, HTML
-
-# display(HTML(data="""
-# <style>
-#     div#notebook-container    { width: 75%; }
-# </style>
-# """))
-
-
-
-
-
 get_ipython().run_line_magic('matplotlib', 'inline')
 import os
 import sys
