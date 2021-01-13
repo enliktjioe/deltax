@@ -46,6 +46,10 @@
 - Run Ubuntu RC Connector using `RCSnail-Connector/src/main.py`
 - It seems that the RCSnail-Connector works fine only if launched from its root folder, not from inside the src/ folder (so you have to do src/main.py) [[source]](https://courses.cs.ut.ee/t/DeltaX2021SelfDriving/Main/OS)
 
+## Jupyter Notebook for Model Training
+
+- Access from [RCSnail-AI-lite/notebooks/training_ground.ipynb](https://github.com/enliktjioe/deltax/blob/master/RCSnail-AI-lite/notebooks/training_ground.ipynb)
+
 ## Reference(s)
 - [DeltaX Self-driving competition](https://courses.cs.ut.ee/t/DeltaX2021SelfDriving/Main/HomePage)
 - [RCSnail API](https://api.rcsnail.com/)
