@@ -25,9 +25,11 @@ import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from tensorflow.keras.utils import plot_model
 
-module_path = os.path.abspath(os.path.join('..'))
-if module_path not in sys.path:
-    sys.path.append(module_path)
+module_path_list = [os.path.abspath(os.path.join('../')), 
+                    os.path.abspath(os.path.join('../../RCSnail-Commons'))]
+for module_path in module_path_list:
+    if module_path not in sys.path:
+        sys.path.append(module_path)
 
 from commons.configuration_manager import ConfigurationManager
 #from src.utilities.transformer import Transformer
