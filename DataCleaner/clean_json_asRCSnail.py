@@ -14,8 +14,9 @@ import PIL
 #foldernames = glob.glob("2020*")
 #output_foldername="cleaned"
 foldernames = glob.glob("*2020*")
-# output_foldername="cleaned_all_masked"
-output_foldername="C://Users/enlik/GitRepo/deltax/RCSnail-AI-lite/n1_m1"
+output_foldername="cleaned_all"
+frame_prefix_name = "frame-" # possible option = "frame-" or "frame_" or "frame"
+frame_file_ext = '.png' # possibile option = jpg or png
 
 data_counter = 0 #keeps track how many we have in folder already
 random.shuffle(foldernames) #shuffling to get both directions mixed order, so if we take the tail as val set we get both
@@ -39,7 +40,11 @@ for rec_name in foldernames:
             if data_type not in ['F','D']:
                 print("BIG NO NO, wrong data type",data_type)
                 break
-                
+            
+            if data_type=="D":
+                if (line['j']['t'] == 0):
+                    continue
+
             if previous_type == data_type:
                 #print(i, ": two of same type in a row", data_type)
                 if data_type=="F": #we want to keep the earliest frame
@@ -67,32 +72,44 @@ for rec_name in foldernames:
     images_to_be_kept = images_to_be_kept[:crop_len] #these are file nrs
     measurements_to_be_kept=measurements_to_be_kept[:crop_len,:]
 
+    # for i, meas in enumerate(measurements_to_be_kept):
+    #     print(i, " - " , np.array(measurements_to_be_kept[i,:]))
 
+    #     if i == 60:
+    #         break;
 
+    # for i,img_nr in enumerate(images_to_be_kept):
+    #     filename = rec_name+'/images/frame'+str(img_nr)+'.jpg'
+    #     im = Image.open(filename)
+    #     small = im.resize(size=[180,120], resample= Image.NEAREST)
+    #     print(type(small))
+    #     cropped = np.array(small)
+    #     print(cropped.shape)
+    #     cropped = cropped[-60:,:,:]
+    #     print(cropped.shape)
 
+    #     #print(cropped)
+    #     break;
 
     for i,img_nr in enumerate(images_to_be_kept):
-        filename = rec_name+'/images/frame-'+str(img_nr)+'.png'
+        filename = rec_name+'/images/'+frame_prefix_name+str(img_nr)+frame_file_ext
         #image = io.imread(fname=filename)
         #should apply transformations here
         #print(type(image[0,0,0]),image[0,:10,:], image.shape)
         im = Image.open(filename)
         small = im.resize(size=[180,120], resample= Image.NEAREST)
-        print(type(small))
+        #print(type(small))
         cropped = np.array(small)
-        print(cropped.shape)
+        #print(cropped.shape)
         cropped = cropped[-60:,:,:]
-        cropped = cropped[:-10,:,:]
-        for jj in range(33,50):
-           dist=max(1,50-jj)
-           print([jj,dist*2])
-           cropped[jj,dist*2:-dist*2,:]=0
         if i%100==0:
-            io.imsave("example"+str(data_counter+i)+".png",cropped)
+            io.imsave("example"+str(data_counter+i)+".jpg",cropped)
         
+        print(i)
+        #print(cropped)
 
-        # np.save(output_foldername+"/frame_"+str(data_counter+i).zfill(7)+".npy", cropped)
-        # np.save(output_foldername+"/commands_"+str(data_counter+i).zfill(7)+".npy", np.array(measurements_to_be_kept[i,:]))
-        np.save(output_foldername+"/frame_n1_m1_"+str(data_counter+i).zfill(7)+".npy", cropped)
-        np.save(output_foldername+"/commands_n1_m1_"+str(data_counter+i).zfill(7)+".npy", np.array(measurements_to_be_kept[i,:]))
+
+        np.save(output_foldername+"/frame_"+str(data_counter+i).zfill(7)+".npy", cropped)
+        np.save(output_foldername+"/commands_"+str(data_counter+i).zfill(7)+".npy", np.array(measurements_to_be_kept[i,:]))
+
     data_counter+=len(images_to_be_kept) #done with this folder, add the nr to counter
