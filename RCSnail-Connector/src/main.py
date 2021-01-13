@@ -29,7 +29,7 @@ def main(context: Context):
     config_manager = ConfigurationManager()
     config = config_manager.config
     rcs = RCSnail()
-    rcs.sign_in_with_email_and_password(os.getenv('RCS_USERNAME', 'enlik@ut.ee'), os.getenv('RCS_PASSWORD', 'rcscode16'))
+    rcs.sign_in_with_email_and_password(os.getenv('RCS_USERNAME', '<your_username>'), os.getenv('RCS_PASSWORD', '<your_password>'))
 
     loop = asyncio.get_event_loop()
 
