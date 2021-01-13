@@ -9,6 +9,7 @@
 - Create RCSnail API account from [here](https://api.rcsnail.com/signin)
 - Python 3.7+ recommended
 - Required Python libraries in `requirements.txt`
+	- Run this command: `pip install -r requirements.txt`
 
 
 ## How to do Data Recording
