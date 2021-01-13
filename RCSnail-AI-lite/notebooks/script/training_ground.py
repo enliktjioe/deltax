@@ -76,12 +76,6 @@ memory = (1, 1)
 model_path = '../'
 
 
-from commons.configuration_manager import ConfigurationManager
-#from src.utilities.transformer import Transformer
-from src.learning.training.generator import Generator, GenFiles
-# from src.learning.models import create_standalone_nvidia_cnn, create_standalone_resnet, create_small_cnn
-from src.learning.models import create_standalone_nvidia_cnn, create_standalone_resnet
-
 import tensorflow as tf
 def scheduler(epoch, lr):
     if epoch>30 and epoch%10==0:
@@ -100,17 +94,19 @@ losses = []
 val_losses = []
 
 #in here added option to not shuffle, so last 20% of recording time is used as val set -- in future might want to reduce proportion of val set
-# generator = Generator(config, memory_tuple= memory, base_path='../', batch_size=batch_size, column_mode='all', shuffle_data=False) 
+generator = Generator(config, memory_tuple= memory, base_path='../', batch_size=batch_size, column_mode='all', shuffle_data=False) 
 
 # frame_shape, numeric_shape, diff_shape = generator.get_shapes()
+frame_shape, diff_shape = generator.get_shapes()
 
-# tqdm.write('Target shape: {}'.format(diff_shape)) #tqdm is some package that allow to track the progress of operations
-# tqdm.write('Input shapes: {}; {}'.format(frame_shape, numeric_shape))
+tqdm.write('Target shape: {}'.format(diff_shape)) #tqdm is some package that allow to track the progress of operations
+tqdm.write('Input shapes: {}'.format(frame_shape))
+
 
 models = []
 
 # ARDI's comment:  Nividia is the model we want to use (resnet might be good to??)
-generator = Generator(config, memory_tuple= memory, base_path='../', batch_size=batch_size, column_mode='all', shuffle_data=False)
+generator = Generator(config, memory_tuple= memory, base_path='../', batch_size=batch_size, column_mode='all', shuffle_data=True)
 models.append((create_standalone_nvidia_cnn(activation='linear', input_shape=(50, 180, 3), output_shape=2), generator.generate))
 
 # # "steer and throttle"
