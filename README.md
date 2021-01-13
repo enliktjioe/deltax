@@ -15,6 +15,10 @@
 - Currently, it's possible only in Windows
 - Launch `RCSAgent/RCSnail.exe`, make surce AI checkbox was unticked.
 - When the RC Car already connected, control it using joystick controller or other controllers.
+- The recording file automatically saved in this folder `RCSAgent/rec`, with .h264 and .json file
+- It needs to be converted to video and image manually using video/image converter software
+	- We used this [HandBrake](https://handbrake.fr/) software for converting .h264 to .mp4 video
+	- We used [VLC](https://www.raymond.cc/blog/extract-video-frames-to-images-using-vlc-media-player/) to convert .mp4 video to multiple frame images 
 - Sample public recording data were accessible from [here](https://owncloud.ut.ee/owncloud/index.php/s/FjqqdgPd4yaF36k)
 
 ## How to Run in Windows
