@@ -7,8 +7,9 @@ from src.utilities.memory_maker import MemoryMaker
 
 class GenFiles:
     frame = 'frame_{}_{:07}.npy'
-    numeric = 'numeric_{}_{:07}.npy'
-    diff = 'diff_{}_{:07}.npy'
+    # numeric = 'numeric_{}_{:07}.npy'
+    # diff = 'diff_{}_{:07}.npy'
+    diff = 'commands_{}_{:07}.npy'
 
     steer_sampling = 'steer_sample_{}.npy'
     gear_sampling = 'gear_sample_{}.npy'
@@ -69,12 +70,15 @@ class Generator:
         return len([fn for fn in os.listdir(self.path) if fn.startswith('frame_')])
 
     def get_shapes(self):
-        frame, numeric, diff = self.load_single_pair(0)
+        # frame, numeric, diff = self.load_single_pair(0)
+        frame, diff = self.load_single_pair(0)
 
         if not hasattr(diff, '__len__'):
-            return frame.shape, numeric.shape, 1
+            # return frame.shape, numeric.shape, 1
+            return frame.shape, 1
 
-        return frame.shape, numeric.shape, diff.shape[0]
+        # return frame.shape, numeric.shape, diff.shape[0]
+        return frame.shape, diff.shape[0]
 
     def generate(self, data='train'):
         batch_count, indexes = self.__evaluate_indexes(data)
@@ -84,7 +88,8 @@ class Generator:
 
             for i in range(batch_count):
                 batch_indexes = indexes[i * self.batch_size:(i + 1) * self.batch_size]
-                x_frame, x_numeric, y = self.__load_batch(batch_indexes)
+                # x_frame, x_numeric, y = self.__load_batch(batch_indexes)
+                x_frame, y = self.__load_batch(batch_indexes)
 
                 yield x_frame, y
 
@@ -96,9 +101,11 @@ class Generator:
 
             for i in range(batch_count):
                 batch_indexes = indexes[i * self.batch_size:(i + 1) * self.batch_size]
-                x_frame, x_numeric, y = self.__load_batch(batch_indexes)
+                # x_frame, x_numeric, y = self.__load_batch(batch_indexes)
+                x_frame, y = self.__load_batch(batch_indexes)
 
-                yield (x_frame, x_numeric), y
+                # yield (x_frame, x_numeric), y
+                yield (x_frame), y
 
     def __evaluate_indexes(self, data):
         if data == 'train':
@@ -118,7 +125,8 @@ class Generator:
                 np.random.shuffle(indexes)
 
             for index in indexes:
-                x_frame, x_numeric, y = self.load_single_pair(index)
+                # x_frame, x_numeric, y = self.load_single_pair(index)
+                x_frame, y = self.load_single_pair(index)
                 yield x_frame, y
 
     def generate_single_train_with_numeric(self, shuffle=True):
@@ -128,8 +136,10 @@ class Generator:
                 np.random.shuffle(indexes)
 
             for index in indexes:
-                x_frame, x_numeric, y = self.load_single_pair(index)
-                yield x_frame, x_numeric, y
+                # x_frame, x_numeric, y = self.load_single_pair(index)
+                x_frame, y = self.load_single_pair(index)
+                # yield x_frame, x_numeric, y
+                yield x_frame, y
 
     def generate_single_test(self, shuffle=True):
         batch_count, indexes = self.__evaluate_indexes('test')
@@ -138,7 +148,8 @@ class Generator:
                 np.random.shuffle(indexes)
 
             for index in indexes:
-                x_frame, x_numeric, y = self.load_single_pair(index)
+                # x_frame, x_numeric, y = self.load_single_pair(index)
+                x_frame, y = self.load_single_pair(index)
                 yield x_frame, y
 
     def generate_single_test_with_numeric(self, shuffle=True):
@@ -148,43 +159,48 @@ class Generator:
                 np.random.shuffle(indexes)
 
             for index in indexes:
-                x_frame, x_numeric, y = self.load_single_pair(index)
-                yield x_frame, x_numeric, y
+                # x_frame, x_numeric, y = self.load_single_pair(index)
+                x_frame, y = self.load_single_pair(index)
+                # yield x_frame, x_numeric, y
+                yield x_frame, y
 
     def __load_batch(self, batch_indexes):
         frames = []
-        numerics = []
+        # numerics = []
         diffs = []
 
         for i in batch_indexes:
-            frame, numeric, diff = self.load_single_pair(i)
+            # frame, numeric, diff = self.load_single_pair(i)
+            frame, diff = self.load_single_pair(i)
 
             frames.append(frame)
-            numerics.append(numeric)
+            # numerics.append(numeric)
             diffs.append(diff)
 
-        return np.array(frames), np.array(numerics), np.array(diffs)
+        # return np.array(frames), np.array(numerics), np.array(diffs)
+        return np.array(frames), np.array(diffs)
 
     def load_single_pair(self, index):
         frame = np.load(self.path + GenFiles.frame.format(self.memory_string, index), allow_pickle=True)
-        numeric = np.load(self.path + GenFiles.numeric.format(self.memory_string, index), allow_pickle=True)
+        # numeric = np.load(self.path + GenFiles.numeric.format(self.memory_string, index), allow_pickle=True)
         diff = np.load(self.path + GenFiles.diff.format(self.memory_string, index), allow_pickle=True)
 
         if self.column_mode == 'steer':
             # steering + throttle
-            numeric = self.__memory.columns_from_memorized(numeric, columns=(1, 2,))
+            # numeric = self.__memory.columns_from_memorized(numeric, columns=(1, 2,))
             # steering + throttle
             diff = diff[1:3]
         elif self.column_mode == 'throttle':
             pass
         elif self.column_mode == 'gear':
             # gear
-            numeric = self.__memory.columns_from_memorized(numeric, columns=(0,))
+            # numeric = self.__memory.columns_from_memorized(numeric, columns=(0,))
             diff = diff[0]
         elif self.column_mode == 'all':
-            numeric = self.__memory.columns_from_memorized(numeric, columns=(0, 1, 2,))
+            # numeric = self.__memory.columns_from_memorized(numeric, columns=(0, 1, 2,))
             diff = diff[0:3]
         else:
             raise ValueError('Misconfigured generator column mode!')
 
-        return frame, numeric, diff
+        # return frame, numeric, diff
+        return frame, diff

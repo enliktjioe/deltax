@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-from IPython.display import display, HTML
+# from IPython.display import display, HTML
 
-display(HTML(data="""
-<style>
-    div#notebook-container    { width: 75%; }
-</style>
-"""))
+# display(HTML(data="""
+# <style>
+#     div#notebook-container    { width: 75%; }
+# </style>
+# """))
 
 
 
@@ -76,6 +76,12 @@ memory = (1, 1)
 model_path = '../'
 
 
+from commons.configuration_manager import ConfigurationManager
+#from src.utilities.transformer import Transformer
+from src.learning.training.generator import Generator, GenFiles
+# from src.learning.models import create_standalone_nvidia_cnn, create_standalone_resnet, create_small_cnn
+from src.learning.models import create_standalone_nvidia_cnn, create_standalone_resnet
+
 import tensorflow as tf
 def scheduler(epoch, lr):
     if epoch>30 and epoch%10==0:
@@ -94,58 +100,55 @@ losses = []
 val_losses = []
 
 #in here added option to not shuffle, so last 20% of recording time is used as val set -- in future might want to reduce proportion of val set
-generator = Generator(config, memory_tuple= memory, base_path='../', batch_size=batch_size, column_mode='all', shuffle_data=False) 
+# generator = Generator(config, memory_tuple= memory, base_path='../', batch_size=batch_size, column_mode='all', shuffle_data=False) 
 
 # frame_shape, numeric_shape, diff_shape = generator.get_shapes()
 
 # tqdm.write('Target shape: {}'.format(diff_shape)) #tqdm is some package that allow to track the progress of operations
 # tqdm.write('Input shapes: {}; {}'.format(frame_shape, numeric_shape))
 
-# models = []
+models = []
 
-#ARDI's comment:  Nividia is the model we want to use (resnet might be good to??)
-#models.append((create_standalone_nvidia_cnn(activation='linear', input_shape=(60, 180, 3), output_shape=2), generator.generate))
+# ARDI's comment:  Nividia is the model we want to use (resnet might be good to??)
+generator = Generator(config, memory_tuple= memory, base_path='../', batch_size=batch_size, column_mode='all', shuffle_data=False)
+models.append((create_standalone_nvidia_cnn(activation='linear', input_shape=(50, 180, 3), output_shape=2), generator.generate))
 
-#"steer and throttle"
-#models.append((create_small_cnn(activation='linear', input_shape=(60, 180, 3), output_shape=2), generator.generate))
-
-# generator = Generator(config, memory_tuple= memory, base_path='../', batch_size=batch_size, column_mode='gear', shuffle_data=False) 
+# # "steer and throttle"
+# generator = Generator(config, memory_tuple= memory, base_path='../', batch_size=batch_size, column_mode='all', shuffle_data=False) 
 # models.append((create_small_cnn(activation='linear', input_shape=(50, 180, 3), output_shape=2), generator.generate))
 
-# callbacks=[tf.keras.callbacks.LearningRateScheduler(scheduler)]
+callbacks=[tf.keras.callbacks.LearningRateScheduler(scheduler)]
 
-# for model, generate_method in tqdm(models):
-#     result_desc = 'n{}_m{}'.format(*memory)
-#     tqdm.write(result_desc)
+for model, generate_method in tqdm(models):
+    result_desc = 'n{}_m{}'.format(*memory)
+    tqdm.write(result_desc)
 
-#     hist = model.fit(generate_method(data='train'),
-#                      steps_per_epoch=generator.train_batch_count,
-#                      validation_data=generate_method(data='test'),
-#                      validation_steps=generator.test_batch_count,
-#                      callbacks=callbacks,
-#                      epochs=epochs, verbose=verbose)
+    hist = model.fit(generate_method(data='train'),
+                     steps_per_epoch=generator.train_batch_count,
+                     validation_data=generate_method(data='test'),
+                     validation_steps=generator.test_batch_count,
+                     callbacks=callbacks,
+                     epochs=epochs, verbose=verbose)
 
-#     model_file_prefix = 'model_n{}_m{}'.format(*memory)
-#     model_file_suffix = '_{}.{}'
+    model_file_prefix = 'model_n{}_m{}'.format(*memory)
+    model_file_suffix = '_{}.{}'
 
-#     model_number = get_model_num(model_path, model_file_prefix)
-#     plot_model(model, to_file=model_path + model_file_prefix + model_file_suffix.format(model_number, 'png'), show_shapes=True)
-#     model.save(model_path + model_file_prefix + model_file_suffix.format(model_number, 'h5'))
+    model_number = get_model_num(model_path, model_file_prefix)
+    plot_model(model, to_file=model_path + model_file_prefix + model_file_suffix.format(model_number, 'png'), show_shapes=True)
+    model.save(model_path + model_file_prefix + model_file_suffix.format(model_number, 'h5'))
     
-#     current_loss = hist.history['loss']
-#     current_val_loss = hist.history['val_loss'] 
+    current_loss = hist.history['loss']
+    current_val_loss = hist.history['val_loss'] 
     
-#     losses.append(current_loss)
-#     print(val_losses)
-#     val_losses.append(current_val_loss)
+    losses.append(current_loss)
+    print(val_losses)
+    val_losses.append(current_val_loss)
     
-#     tqdm.write("Loss per epoch: {}".format(current_loss))
-#     tqdm.write("Validation loss per epoch: {}".format(current_val_loss))
+    tqdm.write("Loss per epoch: {}".format(current_loss))
+    tqdm.write("Validation loss per epoch: {}".format(current_val_loss))
     
-#     gc.collect()\
-
-
-# os.system("printf '\a'")\
+    gc.collect()
+os.system("printf '\a'")
 
 
 print(val_losses)
