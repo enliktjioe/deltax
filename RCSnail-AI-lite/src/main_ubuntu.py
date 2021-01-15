@@ -98,7 +98,7 @@ async def main_dagger(context: Context):
                         next_controls['d_throttle'] = np.float64(0.6) # max(0,min(1, np.float64(controls[1])))}
                         init_jalan=False
                     else:
-                        next_controls['d_throttle'] = np.float64(0.4) # max(0,min(1, np.float64(controls[1])))}
+                        next_controls['d_throttle'] = np.float64(0.45) # max(0,min(1, np.float64(controls[1])))}
                     
                     #DELTAX: to use model's output for throttle, not fixed value
                     #next_controls['d_throttle'] = max(0,min(1, np.float64(controls[1])))}
