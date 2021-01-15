@@ -38,6 +38,8 @@ async def main_dagger(context: Context):
 
     control_mode = conf.control_mode # DELTAX: make sure this is full_model in the config
 
+    init_jalan = True
+
     try:
         model = ModelWrapper(conf, output_shape=2)
 
@@ -51,7 +53,7 @@ async def main_dagger(context: Context):
             frame = frame  #/255.0  <- DELTAX make sure you trained the model on same range of data
             #print(np.max(frame))  <- if incoming frames are in range 0-255 and you trained the model on images scaled to 0-1, model wont work
             frame = frame[:,::-1,:]  #DELTAX: image comes in mirrored in Ubuntu! Need to flip them back for data to be like what we tained with 
-            
+            frame = np.flip(frame, axis=2)            
             expert_action = data 
 
             if np.random.random()>0.99:
@@ -91,7 +93,12 @@ async def main_dagger(context: Context):
                     next_controls['d_gear'] = 1 # DELTAX: always go forward
                     #for throttle you can use 0 to just test if car turns wheels in good direction at different locations
                     #the minimal throttle to make the car move slowly is around 0.65, depends on battery charge level
-                    next_controls['d_throttle'] = np.float64(0.6) # max(0,min(1, np.float64(controls[1])))}
+                    
+                    if init_jalan:
+                        next_controls['d_throttle'] = np.float64(0.6) # max(0,min(1, np.float64(controls[1])))}
+                        init_jalan=False
+                    else:
+                        next_controls['d_throttle'] = np.float64(0.4) # max(0,min(1, np.float64(controls[1])))}
                     
                     #DELTAX: to use model's output for throttle, not fixed value
                     #next_controls['d_throttle'] = max(0,min(1, np.float64(controls[1])))}
