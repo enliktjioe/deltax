@@ -6,6 +6,7 @@ RCSnail-AI-lite/src/raw_input_in_try_loop.png
 RCSnail-AI-lite/src/*.h5
 RCSnail-AI-lite/n1_m1/
 RCSnail-AI-lite/*.zip
+RCSnail-AI-lite/cleaned_all/*.npy
 
 
 tmp/RCS_Recording/

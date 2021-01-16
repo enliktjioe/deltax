@@ -13,6 +13,14 @@ display(HTML(data="""
 get_ipython().system('dir')
 
 
+from platform import python_version
+
+print(python_version())
+
+
+get_ipython().system('python --version')
+
+
 get_ipython().run_line_magic('matplotlib', 'inline')
 import os
 import sys
@@ -94,8 +102,8 @@ import glob
 
 # val_data_loc="preprocessed/cleaned_all"
 # filenames = glob.glob("preprocessed/cleaned_all/*")
-val_data_loc="../n1_m1/"
-filenames = glob.glob("../n1_m1/*")
+val_data_loc="../cleaned_all/"
+filenames = glob.glob("../cleaned_all/*")
 print(filenames[1])
 print(int(len(filenames)/2))
 nr_of_datapoints = int(len(filenames)/2) #label and image files
@@ -107,16 +115,22 @@ preds=[]
 labels=[]
 
 
+for i in range(10,20,1):
+    print(i)
+
+
 frames = []
 commands = []
-for batch in range(1,nr_of_datapoints): # using the end of file. 32 batches of size batch of 32
+for batch in range(53482,53482+nr_of_datapoints): # using the end of file. 32 batches of size batch of 32
     #frames=np.zeros((1,60,180,3))
     #commands = np.zeros((1,2))
     
 #     frames.append(np.load("preprocessed/cleaned_all/frame_"+str(batch).zfill(7)+".npy"))
 #     commands.append(np.load("preprocessed/cleaned_all/commands_"+str(batch).zfill(7)+".npy"))
-    frames.append(np.load(val_data_loc + "frame_n1_m1_"+str(batch).zfill(7)+".npy"))
-    commands.append(np.load(val_data_loc + "commands_n1_m1_"+str(batch).zfill(7)+".npy"))
+#     frames.append(np.load(val_data_loc + "frame_n1_m1_"+str(batch).zfill(7)+".npy"))
+#     commands.append(np.load(val_data_loc + "commands_n1_m1_"+str(batch).zfill(7)+".npy"))
+    frames.append(np.load(val_data_loc + "frame_"+str(batch).zfill(7)+".npy"))
+    commands.append(np.load(val_data_loc + "commands_"+str(batch).zfill(7)+".npy"))
     
     
     #print(commands)
@@ -143,7 +157,7 @@ model = create_standalone_nvidia_cnn(activation='linear', input_shape=(60, 180, 
 model.summary()
 
 
-model.fit(frames, commands, batch_size=64, epochs=10, validation_split=0.2)
+model.fit(frames, commands, batch_size=64, epochs=30, validation_split=0.2)
 
 
 mem_frame = frames[10].reshape(1,60,180,3)
