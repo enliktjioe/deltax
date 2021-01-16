@@ -18,9 +18,6 @@ from platform import python_version
 print(python_version())
 
 
-get_ipython().system('python --version')
-
-
 get_ipython().run_line_magic('matplotlib', 'inline')
 import os
 import sys
@@ -115,13 +112,10 @@ preds=[]
 labels=[]
 
 
-for i in range(10,20,1):
-    print(i)
-
-
 frames = []
 commands = []
-for batch in range(53482,53482+nr_of_datapoints): # using the end of file. 32 batches of size batch of 32
+# for batch in range(53482,53482+nr_of_datapoints): # using the end of file. 32 batches of size batch of 32
+for batch in range(1,nr_of_datapoints): # using the end of file. 32 batches of size batch of 32
     #frames=np.zeros((1,60,180,3))
     #commands = np.zeros((1,2))
     
@@ -157,7 +151,9 @@ model = create_standalone_nvidia_cnn(activation='linear', input_shape=(60, 180, 
 model.summary()
 
 
-model.fit(frames, commands, batch_size=64, epochs=30, validation_split=0.2)
+# ### Fitting with 10 Epochs
+
+model.fit(frames, commands, batch_size=64, epochs=10, validation_split=0.2)
 
 
 mem_frame = frames[10].reshape(1,60,180,3)
@@ -180,8 +176,33 @@ now = datetime.now().strftime("%Y%m%d_%H%M%S")
 print(now)
 
 #plot_model(model, to_file=model_path + model_file_prefix + model_file_suffix.format(model_number, 'png'), show_shapes=True)
-model.save('../src/model_team_3_' + now + '.h5')
+model.save('../src/model_team_3_' + now + '_10epochs_ca1_ca2.h5')
 
 
+# ### Fitting with 12 Epochs
 
+model.fit(frames, commands, batch_size=64, epochs=12, validation_split=0.2)
+
+
+mem_frame = frames[10].reshape(1,60,180,3)
+mem_frame.shape
+mem_frame
+
+new_mem_frame = mem_frame
+
+if(new_mem_frame.all() == mem_frame.all()):
+    print("sama")
+
+
+model.predict(mem_frame)
+
+
+from datetime import datetime
+
+# Get current timestamp | source: https://www.programiz.com/python-programming/datetime/current-datetime
+now = datetime.now().strftime("%Y%m%d_%H%M%S")
+print(now)
+
+#plot_model(model, to_file=model_path + model_file_prefix + model_file_suffix.format(model_number, 'png'), show_shapes=True)
+model.save('../src/model_team_3_' + now + '_12epochs_ca1_ca2.h5')
 
