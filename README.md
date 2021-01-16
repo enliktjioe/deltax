@@ -11,7 +11,6 @@
 - Required Python libraries in `requirements.txt`
 	- Run this command: `pip install -r requirements.txt`
 
-
 ## How to do Data Recording
 - Currently, it's possible only in Windows
 - Launch `RCSAgent/RCSnail.exe`, make surce AI checkbox was unticked.
@@ -22,6 +21,12 @@
 	- We used [VLC](https://www.raymond.cc/blog/extract-video-frames-to-images-using-vlc-media-player/) to convert .mp4 video to multiple frame images 
 - Sample public recording data were accessible from [here](https://owncloud.ut.ee/owncloud/index.php/s/FjqqdgPd4yaF36k)
 
+## Simple Demo Video
+### DeltaX 2021 - Team 3 - First Trained Model with 10 Epochs
+[![DeltaX 2021 - Team 3 - First Trained Model with 10 Epochs
+](img/youtube_thumbnail.jpg)](https://youtu.be/DxbarWEQNTk)
+
+
 ## How to Run in Windows
 - Connect to `rscgx` wifi hotspot at DeltaX Track in 2nd floor of Delta Building University of Tartu. 
 - Launch `RCSAgent/RCSnail.exe`, login using RCSnail API account
@@ -30,7 +35,6 @@
 	- Change the `model_name` with the AI model that you want to run
 	- Change the `control_mode` to `full_model` for autonomous mode. The other is `full_expert` for steering with controller
 - Go to `RCSnail-AI-lite/src` and run `main_windows.py`
-
 
 ## How to Run in Ubuntu
 - Connect to `rscgx` wifi hotspot at DeltaX Track in 2nd floor of Delta Building University of Tartu.
