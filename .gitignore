@@ -19,7 +19,7 @@ tmp/example100.png
 
 DataCleaner/cleaned_all/*
 DataCleaner/cleaned_all_masked/*
-DataCleaner/2020*/
+DataCleaner/2020*/  
 DataCleaner/example0.jpg
 DataCleaner/example100.jpg
 DataCleaner/RCS_Recording/*

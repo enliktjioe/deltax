@@ -20,8 +20,11 @@ m_interval: 1 # memory interval
 
 path_to_models: ""
 # model_name: masked_0.128_0.176.h5
-model_name: new_0.13_0.21.h5
+# model_name: new_0.13_0.21.h5
 # model_name: model_n1_m1_13.h5
+# model_name: model_team_3_1.h5
+# model_name: model_team_3_20210115_182559_1epoch.h5
+model_name: model_team_3_20210115_184854_10epoch.h5
 
 # Imitation learning
 dagger_training_enabled: false
