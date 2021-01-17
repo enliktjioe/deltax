@@ -7,7 +7,7 @@ RCSnail-AI-lite/src/*.h5
 RCSnail-AI-lite/n1_m1/
 RCSnail-AI-lite/*.zip
 RCSnail-AI-lite/cleaned_all/*.npy
-
+RCSnail-AI-lite/_done/*.zip
 
 tmp/RCS_Recording/
 tmp/.ipynb_checkpoints/
