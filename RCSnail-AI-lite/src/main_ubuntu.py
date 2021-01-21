@@ -43,6 +43,7 @@ async def main_dagger(context: Context):
     counter_nyangkut = 0
     counter_mundur = 0
     flag_mundur = False
+    enable_mundur = True
 
     tmp_s = 0
     tmp_s2 = 0
@@ -169,7 +170,7 @@ async def main_dagger(context: Context):
                     counter_nyangkut = 0
 
 
-                if flag_mundur == True:
+                if flag_mundur == True and enable_mundur == True:
                     counter_mundur += 1
                     next_controls['d_gear'] = -1
                     next_controls['d_throttle'] = np.float64(0.75)
