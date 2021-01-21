@@ -30,10 +30,12 @@ path_to_models: ""
 # model_name: model_team_3_20210117_012558_10epochs_ca1_ca2_ca3.h5
 # model_name: model_team_3_20210117_021502_12epochs_ca1_ca2_ca3.h5 # 2nd BEST
 # model_name: model_team_3_20210117_134237_10epochs_ca1_ca2_ca3_ca4.h5 # bagus untuk zig-zag
-# model_name: model_team_3_20210117_145523_12epochs_ca1_ca2_ca3_ca4.h5 # BEST
+model_name: model_team_3_20210117_145523_12epochs_ca1_ca2_ca3_ca4.h5 # BEST
 # model_name: model_team_3_20210120_043317_25epochs_ca1_ca2_ca3_ca4.h5 # not good
 # model_name: model_team_3_20210120_043328_50epochs_ca1_ca2_ca3_ca4.h5 # not good
-model_name: model_team_3_20210120_213050_13epochs_ca1_ca2_ca3_ca4_ca5.h5
+# model_name: model_team_3_20210120_213050_13epochs_ca1_ca2_ca3_ca4_ca5.h5
+# model_name: model_team_3_20210120_213050_13epochs_ca1_ca2_ca3_ca4_ca5.h5
+
 
 # Imitation learning
 dagger_training_enabled: false
