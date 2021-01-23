@@ -203,12 +203,12 @@ now = datetime.now().strftime("%Y%m%d_%H%M%S")
 print(now)
 
 #plot_model(model, to_file=model_path + model_file_prefix + model_file_suffix.format(model_number, 'png'), show_shapes=True)
-model.save('../src/model_team_3_' + now + '_10epochs_ca1_ca2_ca3_ca6.h5')
+model.save('../src/model_team_3_' + now + '12epochs_ca_1234_plus_publicdata_20201130-164047457.h5')
 
 
 #todo load test set into memeory, evaluate
 import keras
-model = keras.models.load_model('../src/model_team_3_' + now + '_10epochs_ca1_ca2_ca3_ca6.h5')
+model = keras.models.load_model('../src/model_team_3_' + now + '12epochs_ca_1234_plus_publicdata_20201130-164047457.h5')
 import glob
 
 val_data_loc="../cleaned_all"
