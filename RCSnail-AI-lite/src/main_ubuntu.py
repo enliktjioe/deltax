@@ -125,7 +125,7 @@ async def main_dagger(context: Context):
                     #for throttle you can use 0 to just test if car turns wheels in good direction at different locations
                     #the minimal throttle to make the car move slowly is around 0.65, depends on battery charge level
                     
-                    t = 0.48
+                    t = 0.45
                     # t = 0.55
 
                     if (s >= -0.25) and (s<=0.25):
@@ -134,8 +134,8 @@ async def main_dagger(context: Context):
                         counter_speed = 0
                         #pass
 
-                    if counter_speed >=10:
-                        t = 0.70
+                    if counter_speed >=8:
+                        t = 0.68
                         counter_speed = 0
 
                     if init_jalan:
@@ -145,13 +145,13 @@ async def main_dagger(context: Context):
                         next_controls['d_throttle'] = np.float64(t) # max(0,min(1, np.float64(controls[1])))}
                     
 
-                    if (abs(tmp_s - s) <= 0.0004) and (abs(s) != 1): 
+                    if (abs(tmp_s - s) <= 0.0005): 
                         counter_nyangkut += 1
                     else:
                         counter_nyangkut = 0
 
 
-                    if counter_nyangkut >= 15:
+                    if counter_nyangkut >= 18:
                         flag_mundur = True   
                         counter_nyangkut = 0   
                         tmp_s2 = s              
@@ -164,27 +164,26 @@ async def main_dagger(context: Context):
                 else:
                     raise ValueError('Misconfigured control mode!')
 
-                if counter_mundur >= 5:
-                    counter_mundur = 0
-                    flag_mundur = False
-                    counter_nyangkut = 0
+                # if counter_mundur >= 5:
+                #     counter_mundur = 0
+                #     flag_mundur = False
+                #     counter_nyangkut = 0
 
-
-                if flag_mundur == True and enable_mundur == True:
-                    counter_mundur += 1
-                    next_controls['d_gear'] = -1
-                    next_controls['d_throttle'] = np.float64(0.75)
-                    next_controls['d_steering'] = tmp_s2
-                    controls_queue.send_json(next_controls)
-                    time.sleep(0.105)
-                else:
-                    controls_queue.send_json(next_controls)
+                # if flag_mundur == True and enable_mundur == True:
+                #     counter_mundur += 1
+                #     next_controls['d_gear'] = -1
+                #     next_controls['d_throttle'] = np.float64(0.75)
+                #     next_controls['d_steering'] = tmp_s2
+                #     controls_queue.send_json(next_controls)
+                #     time.sleep(0.105)
+                # else:
+                #     controls_queue.send_json(next_controls)
 
                 print(next_controls, counter_speed, counter_nyangkut, counter_mundur, abs(tmp_s - s))
 
                 tmp_s = s
 
-                #controls_queue.send_json(next_controls)
+                controls_queue.send_json(next_controls)
 
             except Exception as ex:
                 print("Predicting exception: {}".format(ex))
