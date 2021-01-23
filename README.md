@@ -22,9 +22,18 @@
 - Sample public recording data were accessible from [here](https://owncloud.ut.ee/owncloud/index.php/s/FjqqdgPd4yaF36k)
 
 ## Simple Demo Video
-### DeltaX 2021 - Team 3 - First Trained Model with 10 Epochs
+### Team 3 - First Trained Model with 10 Epochs
 [![DeltaX 2021 - Team 3 - First Trained Model with 10 Epochs
 ](img/youtube_thumbnail.jpg)](https://youtu.be/DxbarWEQNTk)
+
+### DeltaX Self-Driving Team 3 - Test 2021-01-21 at 03.49 PM
+[![DeltaX Self-Driving Team 3 - Test 2021-01-21 at 03.49 PM
+](img/youtube_thumbnail_2.jpg)](https://youtu.be/8Q4TsXsWmDQ)
+
+### DeltaX Self-Driving Team 3 - Test 2021-01-21 at 03.53 PM
+[![DeltaX Self-Driving Team 3 - Test 2021-01-21 at 03.53 PM
+](img/youtube_thumbnail_3.jpg)](https://youtu.be/9xS4O3E9YUA)
+
 
 
 ## How to Run in Windows
