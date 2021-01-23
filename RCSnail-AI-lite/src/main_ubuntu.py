@@ -40,6 +40,13 @@ async def main_dagger(context: Context):
 
     init_jalan = True
     counter_speed = 0
+    counter_nyangkut = 0
+    counter_mundur = 0
+    flag_mundur = False
+    enable_mundur = True
+
+    tmp_s = 0
+    tmp_s2 = 0
 
     try:
         model = ModelWrapper(conf, output_shape=2)
@@ -80,6 +87,19 @@ async def main_dagger(context: Context):
                 continue
 
 
+            # f = open("demofile2.txt", "a")
+            # mem_frame_list = mem_frame.reshape(60*180*3)
+
+            # for i in mem_frame_list:
+            #     f.write("{0}, ".format(i))
+            
+            # f.write("=============================== \n")
+
+            # f.close()
+            
+
+
+
             try:
                 if control_mode == 'full_expert': #this would be if you steer by controller
                     next_controls = expert_action.copy()
@@ -88,7 +108,16 @@ async def main_dagger(context: Context):
                     controls = model.model.predict(mem_frame)[0] #DELTAX - neural network makes predictions based on frame
                     #DELTAX: this printout helps you understand if model outputs are in reasonable range (-1 to 1 fr steering)
 
-                    s = max(-1,min(1, np.float64(controls[0])))
+                    #because of the wrong calibration from the controller, it made the car tends to go right in the "jalan lurus", so we need to decrease it
+                    s = np.float64(controls[0]) 
+
+                    if (s > -0.15) and (s < 0.2):
+                        s = s - 0.15
+
+                    s = max(-1,min(1, s))
+
+                
+
                     #DELTAX: floats we sent must be float64, as flat32 is not json serializable for some reason
                     next_controls={'d_steering': s}
     
@@ -96,7 +125,8 @@ async def main_dagger(context: Context):
                     #for throttle you can use 0 to just test if car turns wheels in good direction at different locations
                     #the minimal throttle to make the car move slowly is around 0.65, depends on battery charge level
                     
-                    t = 0.49
+                    t = 0.48
+                    # t = 0.55
 
                     if (s >= -0.25) and (s<=0.25):
                         counter_speed = counter_speed + 1
@@ -104,8 +134,8 @@ async def main_dagger(context: Context):
                         counter_speed = 0
                         #pass
 
-                    if counter_speed >=5:
-                        t = 0.8
+                    if counter_speed >=10:
+                        t = 0.70
                         counter_speed = 0
 
                     if init_jalan:
@@ -114,8 +144,19 @@ async def main_dagger(context: Context):
                     else:
                         next_controls['d_throttle'] = np.float64(t) # max(0,min(1, np.float64(controls[1])))}
                     
-                    print(next_controls, counter_speed)
 
+                    if (abs(tmp_s - s) <= 0.0004) and (abs(s) != 1): 
+                        counter_nyangkut += 1
+                    else:
+                        counter_nyangkut = 0
+
+
+                    if counter_nyangkut >= 15:
+                        flag_mundur = True   
+                        counter_nyangkut = 0   
+                        tmp_s2 = s              
+
+                    
 
                     #DELTAX: to use model's output for throttle, not fixed value
                     #next_controls['d_throttle'] = max(0,min(1, np.float64(controls[1])))}
@@ -123,7 +164,27 @@ async def main_dagger(context: Context):
                 else:
                     raise ValueError('Misconfigured control mode!')
 
-                controls_queue.send_json(next_controls)
+                if counter_mundur >= 5:
+                    counter_mundur = 0
+                    flag_mundur = False
+                    counter_nyangkut = 0
+
+
+                if flag_mundur == True and enable_mundur == True:
+                    counter_mundur += 1
+                    next_controls['d_gear'] = -1
+                    next_controls['d_throttle'] = np.float64(0.75)
+                    next_controls['d_steering'] = tmp_s2
+                    controls_queue.send_json(next_controls)
+                    time.sleep(0.105)
+                else:
+                    controls_queue.send_json(next_controls)
+
+                print(next_controls, counter_speed, counter_nyangkut, counter_mundur, abs(tmp_s - s))
+
+                tmp_s = s
+
+                #controls_queue.send_json(next_controls)
 
             except Exception as ex:
                 print("Predicting exception: {}".format(ex))
