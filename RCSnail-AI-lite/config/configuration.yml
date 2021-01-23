@@ -33,9 +33,12 @@ path_to_models: ""
 # model_name: model_team_3_20210117_145523_12epochs_ca1_ca2_ca3_ca4.h5 # BEST
 # model_name: model_team_3_20210120_043317_25epochs_ca1_ca2_ca3_ca4.h5 # not good
 # model_name: model_team_3_20210120_043328_50epochs_ca1_ca2_ca3_ca4.h5 # not good
-# model_name: model_team_3_20210120_213050_13epochs_ca1_ca2_ca3_ca4_ca5.h5
-# model_name: model_team_3_20210120_213050_13epochs_ca1_ca2_ca3_ca4_ca5.h5
-model_name: model_team_3_20210121_163334_10epochs_ca1_ca2_ca3_ca6.h5
+# model_name: model_team_3_20210120_213050_13epochs_ca1_ca2_ca3_ca4_ca5.h5 # not good
+# model_name: model_team_3_20210120_213050_13epochs_ca1_ca2_ca3_ca4_ca5.h5 # not good
+model_name: model_team_3_20210121_163334_10epochs_ca1_ca2_ca3_ca6.h5 # New BEST
+# model_name: model_team_3_20210123_014012_12epochs_publicdata_tail7.h5 # BAD
+# model_name: model_team_3_20210123_022105_12epochs_ca_1234_plus_publicdata_20201130-164047457.h5 # BAD
+# model_name: model_team_3_20210123_163157_12epochs_123678.h5 # TODO
 
 # Imitation learning
 dagger_training_enabled: false

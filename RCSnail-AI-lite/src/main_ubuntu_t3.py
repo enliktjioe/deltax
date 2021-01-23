@@ -120,7 +120,7 @@ async def main_dagger(context: Context):
                     #for throttle you can use 0 to just test if car turns wheels in good direction at different locations
                     #the minimal throttle to make the car move slowly is around 0.65, depends on battery charge level
                     
-                    t = 0.48
+                    t = 0.46
 
                     if (s >= -0.25) and (s<=0.25):
                         counter_speed = counter_speed + 1
@@ -129,7 +129,7 @@ async def main_dagger(context: Context):
                         #pass
 
                     if counter_speed >=10:
-                        t = 0.74
+                        t = 0.7
                         counter_speed = 0
 
                     if init_jalan:
