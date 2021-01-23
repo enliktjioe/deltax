@@ -43,7 +43,7 @@ async def main_dagger(context: Context):
     counter_nyangkut = 0
     counter_mundur = 0
     flag_mundur = False
-    enable_mundur = True
+    enable_mundur = False
 
     tmp_s = 0
     tmp_s2 = 0
@@ -112,7 +112,7 @@ async def main_dagger(context: Context):
                     s = np.float64(controls[0]) 
 
                     if (s > -0.15) and (s < 0.2):
-                        s = s - 0.15
+                        s = s - 0.18
 
                     s = max(-1,min(1, s))
 
@@ -125,8 +125,7 @@ async def main_dagger(context: Context):
                     #for throttle you can use 0 to just test if car turns wheels in good direction at different locations
                     #the minimal throttle to make the car move slowly is around 0.65, depends on battery charge level
                     
-                    t = 0.45
-                    # t = 0.55
+                    t = 0.51
 
                     if (s >= -0.25) and (s<=0.25):
                         counter_speed = counter_speed + 1
@@ -135,7 +134,7 @@ async def main_dagger(context: Context):
                         #pass
 
                     if counter_speed >=8:
-                        t = 0.68
+                        t = 0.8
                         counter_speed = 0
 
                     if init_jalan:
