@@ -19,6 +19,7 @@ frame_prefix_name = "frame-" # possible option = "frame-" or "frame_" or "frame"
 frame_file_ext = '.png' # possibile option = jpg or png
 
 data_counter = 0 #keeps track how many we have in folder already
+# data_counter = 154948 #keeps track how many we have in folder already
 random.shuffle(foldernames) #shuffling to get both directions mixed order, so if we take the tail as val set we get both
 for rec_name in foldernames:
     print(foldernames[-3:])
@@ -102,16 +103,16 @@ for rec_name in foldernames:
         cropped = np.array(small)
         #print(cropped.shape)
         cropped = cropped[-60:,:,:]
-        if i%100==0:
-            io.imsave("example"+str(data_counter+i)+".jpg",cropped)
+        # if i%100==0:
+        #     io.imsave("example"+str(data_counter+i)+".jpg",cropped)
         
         print(i)
         #print(cropped)
 
 
-        # np.save(output_foldername+"/frame_"+str(data_counter+i).zfill(7)+".npy", cropped)
-        # np.save(output_foldername+"/commands_"+str(data_counter+i).zfill(7)+".npy", np.array(measurements_to_be_kept[i,:]))
-        np.save(output_foldername+"/frame_n1_m1_"+str(data_counter+i).zfill(7)+".npy", cropped)
-        np.save(output_foldername+"/commands_n1_m1_"+str(data_counter+i).zfill(7)+".npy", np.array(measurements_to_be_kept[i,:]))
+        np.save(output_foldername+"/frame_"+str(data_counter+i).zfill(7)+".npy", cropped)
+        np.save(output_foldername+"/commands_"+str(data_counter+i).zfill(7)+".npy", np.array(measurements_to_be_kept[i,:]))
+        # np.save(output_foldername+"/frame_n1_m1_"+str(data_counter+i).zfill(7)+".npy", cropped)
+        # np.save(output_foldername+"/commands_n1_m1_"+str(data_counter+i).zfill(7)+".npy", np.array(measurements_to_be_kept[i,:]))
     
     data_counter+=len(images_to_be_kept) #done with this folder, add the nr to counter

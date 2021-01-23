@@ -6,7 +6,7 @@ RCSnail-AI-lite/src/raw_input_in_try_loop.png
 RCSnail-AI-lite/src/*.h5
 RCSnail-AI-lite/n1_m1/
 RCSnail-AI-lite/*.zip
-RCSnail-AI-lite/cleaned_all/*.npy
+RCSnail-AI-lite/cleaned_all*/
 RCSnail-AI-lite/_done/*.zip
 
 tmp/RCS_Recording/
@@ -17,9 +17,10 @@ tmp/frames_jpg/
 tmp/example0.png
 tmp/example100.png
 
-DataCleaner/cleaned_all/*
-DataCleaner/cleaned_all_masked/*
-DataCleaner/2020*/  
+DataCleaner/cleaned_all/*.npy
+DataCleaner/cleaned_all_public_data/*.npy
+DataCleaner/2020*/
+DataCleaner/test_2020*/
 DataCleaner/example0.jpg
 DataCleaner/example100.jpg
 DataCleaner/RCS_Recording/*
@@ -30,3 +31,4 @@ RCSnail-Connector/src/main.py
 RCSnail-AI-lite/cleaned_all_5.rar
 RCSnail-AI-lite/notebooks/Nivida cnn standalone validation loss.png
 RCSnail-AI-lite/notebooks/Training.png
+workspace.code-workspace
