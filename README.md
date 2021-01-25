@@ -34,8 +34,6 @@
 [![DeltaX Self-Driving Team 3 - Test 2021-01-21 at 03.53 PM
 ](img/youtube_thumbnail_3.jpg)](https://youtu.be/9xS4O3E9YUA)
 
-
-
 ## How to Run in Windows
 - Connect to `rscgx` wifi hotspot at DeltaX Track in 2nd floor of Delta Building University of Tartu. 
 - Launch `RCSAgent/RCSnail.exe`, login using RCSnail API account
